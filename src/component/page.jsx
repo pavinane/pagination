@@ -6,7 +6,7 @@ function Page() {
 
   const [pageCount, setpageCount] = useState(0);
 
-  let limit = 100;
+  let limit = 10;
 
   useEffect(() => {
     const getComments = async () => {
@@ -16,7 +16,7 @@ function Page() {
         // `https://jsonplaceholder.typicode.com/comments?_page=1&_limit=${limit}`
       );
       const data = await res.json();
-      const total = data.nbHits;
+      const total = data.nbPages;
       setpageCount(Math.ceil(total / limit));
       // console.log(Math.ceil(total/12));
       setItems(data.hits);
@@ -51,7 +51,33 @@ function Page() {
   return (
     <div className="container">
       <div className="row m-2">
-        {items.map((item, index) => {
+        <table className="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th scope="col">NO</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Author</th>
+              <th scope="col">Title</th>
+              {/* <th scope="col">Url</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) => {
+              const day = new Date();
+              console.log(day);
+              return (
+                <tr className="tabel-datas" key={index}>
+                  <td>{item.objectID}</td>
+                  <td>{item.created_at}</td>
+                  <td> {item.title}</td>
+                  <td>{item.author}</td>
+                  {/* <td>{item.url}</td> */}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {/* {items.map((item, index) => {
           return (
             <div key={index} className="col-sm-6 col-md-4 v my-2">
               <div className="card shadow-sm w-100" style={{ minHeight: 225 }}>
@@ -66,9 +92,10 @@ function Page() {
                   <p className="card-text">Title : {item.title}</p>
                 </div>
               </div>
+
             </div>
           );
-        })}
+        })} */}
       </div>
 
       <ReactPaginate

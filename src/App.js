@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Author from "./component/author";
+import React from "react";
+import "./App.css";
 import Page from "./component/page";
 
 function App() {
@@ -7,10 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="m-5">
-        {/* <Author /> */}
-        <Page />
-      </div>
+      <Page />
     </div>
   );
 }
