@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useForm } from "react-hook-form";
+import "./page.scss";
+import FormDatas from "./form";
 
 function Page() {
   const [items, setItems] = useState([]);
@@ -63,8 +66,8 @@ function Page() {
           </thead>
           <tbody>
             {items.map((item, index) => {
-              const day = new Date();
-              console.log(day);
+              //   const day = new Date();
+              //   console.log(day);
               return (
                 <tr className="tabel-datas" key={index}>
                   <td>{item.objectID}</td>
@@ -77,25 +80,6 @@ function Page() {
             })}
           </tbody>
         </table>
-        {/* {items.map((item, index) => {
-          return (
-            <div key={index} className="col-sm-6 col-md-4 v my-2">
-              <div className="card shadow-sm w-100" style={{ minHeight: 225 }}>
-                <div className="card-body">
-                  <h5 className="card-title text-center h2">
-                    Id :{item.objectID}{" "}
-                  </h5>
-                  <h6 className="card-subtitle mb-2 text-muted text-center">
-                    Author : {item.author}
-                  </h6>
-                  <p className="card-text text-center">{item.created_at}</p>
-                  <p className="card-text">Title : {item.title}</p>
-                </div>
-              </div>
-
-            </div>
-          );
-        })} */}
       </div>
 
       <ReactPaginate
@@ -117,8 +101,38 @@ function Page() {
         breakLinkClassName={"page-link"}
         activeClassName={"active"}
       />
+      {/* <Formdata /> */}
+      <FormDatas />
     </div>
   );
 }
 
 export default Page;
+
+const Formdata = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+
+  return (
+    <div className="col-md-12 bg-dark author-data">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="d-flex flex-column mb-3  col-md-4 m-auto align-content-around "
+      >
+        <input
+          {...register("author", { required: true })}
+          placeholder="author"
+        />
+        <input {...register("title", { required: true })} placeholder="title" />
+
+        <button type="submit" className="btn btn-danger">
+          submit
+        </button>
+      </form>
+    </div>
+  );
+};
